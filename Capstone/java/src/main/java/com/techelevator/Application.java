@@ -21,6 +21,7 @@ public class Application {
 
 			if (selection.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				// display vending machine items
+				Inventory currentInven = new Inventory();
 			} else if (selection.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
 			}
