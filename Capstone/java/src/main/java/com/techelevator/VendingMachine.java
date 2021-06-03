@@ -33,4 +33,23 @@ public class VendingMachine {
     public Map<String, InventoryItem> getInventoryItemMap() {
         return inventoryItemMap;
     }
+    /*purchase screen
+    if (deposit =0  && they select item){
+    return "insufficient funds" error - placed back into purchase screen
+
+    getbalance - customerBalance.getbalnce(finalBalance)
+    system.out.println("you currently have $"+getbalnce+" to spend. what would you like to purchase?")
+    take in desired purchase
+    verify if item is available - (stock>0)
+    verify sufficient funds - (finalBalance>=itemCost)
+        if (both are true){
+        balanceAfterPurchase = balance - itemCost
+        stock--
+        vending machine balance gets updated ***need to create vendMachBalance
+        print the correspond message with item
+        return to purchase menu
+
+        when returned they can still purchase items. Check for SOLD OUT or insuffients funds
+
+     */
 }
