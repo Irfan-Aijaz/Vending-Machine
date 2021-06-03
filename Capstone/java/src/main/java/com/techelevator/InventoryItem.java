@@ -17,6 +17,10 @@ public class InventoryItem {
     public int getStock(){
         return stock;
     }
+    public void changeStock(){
+        stock--;
+
+    }
 
     public String getButton() {
         return button;

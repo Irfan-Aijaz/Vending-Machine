@@ -30,6 +30,8 @@ public class Application {
 
 			} else if (selection.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				// do purchase
+				currentInven.purchaseItem();
+
 			}
 		}
 	}

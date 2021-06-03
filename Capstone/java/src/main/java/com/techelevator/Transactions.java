@@ -2,11 +2,11 @@ package com.techelevator;
 
 import java.math.BigDecimal;
 
-public class CustomerBalance {
+public class Transactions {
 
-    private String balance;
+    private String balance = "";
 
-    public CustomerBalance(String balance) {
+    public Transactions(String balance) {
         this.balance = balance;
     }
 
@@ -14,18 +14,18 @@ public class CustomerBalance {
         return balance;
     }
 
-    public String deposit(String amountToDeposit) {
+    public void deposit(String amountToDeposit) {
         BigDecimal startBalance = new BigDecimal(balance);
         BigDecimal depositAmount = new BigDecimal(amountToDeposit);
         BigDecimal finalBalance = startBalance.add(depositAmount);
-        return finalBalance.toString();
+        balance = finalBalance.toString();
     }
 
-    public String makeChange(String amountToWithdraw) {
+    public void makeChange(String amountToWithdraw) {
         BigDecimal startBalance = new BigDecimal(balance);
         BigDecimal withdrawAmount = new BigDecimal(amountToWithdraw);
         BigDecimal finalBalance = startBalance.subtract(withdrawAmount);
-        return finalBalance.toString();
+        balance = finalBalance.toString();
     }
 
 }
