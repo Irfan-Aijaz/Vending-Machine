@@ -3,11 +3,11 @@ package com.techelevator;
 public class InventoryItem {
     private String button;
     private String itemName;
-    private double itemPrice;
+    private String itemPrice;
     private String itemType;
     private int stock;
 
-    public InventoryItem(String button, String itemName, double itemPrice, String itemType) {
+    public InventoryItem(String button, String itemName, String itemPrice, String itemType) {
         this.button = button;
         this.itemName = itemName;
         this.itemPrice = itemPrice;
@@ -26,7 +26,7 @@ public class InventoryItem {
         return itemName;
     }
 
-    public double getItemPrice() {
+    public String getItemPrice() {
         return itemPrice;
     }
 
