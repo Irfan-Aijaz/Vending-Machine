@@ -21,7 +21,7 @@ public class Transactions {
         balance = finalBalance.toString();
     }
 
-    public void makeChange(String amountToWithdraw) {
+    public void subtractFromBalance(String amountToWithdraw) {
         BigDecimal startBalance = new BigDecimal(balance);
         BigDecimal withdrawAmount = new BigDecimal(amountToWithdraw);
         BigDecimal finalBalance = startBalance.subtract(withdrawAmount);

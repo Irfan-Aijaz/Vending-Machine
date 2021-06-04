@@ -1,11 +1,12 @@
 package com.techelevator;
 
-public class InventoryItem {
+public class InventoryItem implements ItemSound {
     private String button;
     private String itemName;
     private String itemPrice;
     private String itemType;
     private int stock;
+    private String sound;
 
     public InventoryItem(String button, String itemName, String itemPrice, String itemType) {
         this.button = button;
@@ -36,6 +37,10 @@ public class InventoryItem {
 
     public String getItemType() {
         return itemType;
+    }
+
+    public String getSound(){
+        return sound;
     }
 
 
