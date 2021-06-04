@@ -10,7 +10,8 @@ public class Application {
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
 	private static final String MAIN_MENU_OPTION_EXIT = "Exit";
-	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT };
+	private static final String MAIN_MENU_OPTION_SALES_REPORT = "";
+	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT, MAIN_MENU_OPTION_SALES_REPORT };
 	private static final String PURCHASE_ITEMS_MENU_FEED_MONEY = "Feed Money";
 	private static final String PURCHASE_ITEMS_MENU_SELECT_PRODUCT = "Select Product";
 	private static final String PURCHASE_ITEMS_MENU_COMPLETE_TRANSACTION = "Complete Transaction";
@@ -48,7 +49,14 @@ public class Application {
 
 				// Exits the vending machine
 				break;
+
+			} else if (selection.equals(MAIN_MENU_OPTION_SALES_REPORT)) {
+
+				// Provides SUPER SECRET Sales Report
+				currentInven.salesReport();
+
 			}
+
 		}
 	}
 
@@ -75,7 +83,7 @@ public class Application {
 
 				// Calls feedMoney();
 
-				feedMoney();
+				currentInven.feedMoney(userInput);
 
 			} else if (selection.equals(PURCHASE_ITEMS_MENU_SELECT_PRODUCT)) {
 
@@ -92,16 +100,9 @@ public class Application {
 				break;
 			}
 		}
-
 	}
 
-	public void feedMoney() {
-		// Adds cash to the customer's balance
-		System.out.println("Please enter cash: ");
-		String deposit = userInput.nextLine();
-		currentInven.deposit(deposit);
-		System.out.println("Money fed successfully.");
-	}
+
 
 
 }

@@ -15,6 +15,7 @@ public class Transactions {
     }
 
     public void deposit(String amountToDeposit) {
+        // Use BigDecimal for more accurate deposit
         BigDecimal startBalance = new BigDecimal(balance);
         BigDecimal depositAmount = new BigDecimal(amountToDeposit);
         BigDecimal finalBalance = startBalance.add(depositAmount);
@@ -22,6 +23,7 @@ public class Transactions {
     }
 
     public void subtractFromBalance(String amountToWithdraw) {
+        // Use BigDecimal for more accurate withdraw
         BigDecimal startBalance = new BigDecimal(balance);
         BigDecimal withdrawAmount = new BigDecimal(amountToWithdraw);
         BigDecimal finalBalance = startBalance.subtract(withdrawAmount);

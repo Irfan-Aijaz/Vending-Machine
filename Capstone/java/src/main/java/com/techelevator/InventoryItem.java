@@ -1,6 +1,6 @@
 package com.techelevator;
 
-public class InventoryItem implements ItemSound {
+public class InventoryItem {
     private String button;
     private String itemName;
     private String itemPrice;
@@ -8,19 +8,30 @@ public class InventoryItem implements ItemSound {
     private int stock;
     private String sound;
 
-    public InventoryItem(String button, String itemName, String itemPrice, String itemType) {
+    public InventoryItem(String button, String itemName, String itemPrice, String itemType, String sound) {
         this.button = button;
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemType = itemType;
         this.stock = 5;
+        this.sound = sound;
     }
-    public int getStock(){
-        return stock;
-    }
+
+
+
+
+
     public void changeStock(){
         stock--;
 
+    }
+
+    public int getStock(){
+        return stock;
+    }
+
+    public String getSound(){
+        return sound;
     }
 
     public String getButton() {
@@ -39,9 +50,6 @@ public class InventoryItem implements ItemSound {
         return itemType;
     }
 
-    public String getSound(){
-        return sound;
-    }
 
 
 }
