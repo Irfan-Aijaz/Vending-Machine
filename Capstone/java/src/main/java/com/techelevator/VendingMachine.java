@@ -1,9 +1,10 @@
 package com.techelevator;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -14,7 +15,13 @@ public class VendingMachine {
     private Map<String, InventoryItem> inventoryItemMap = new TreeMap<>();
     private Transactions customer = new Transactions("0");
     private Transactions vendingMachineProfits = new Transactions("0");
-    LocalDate today = LocalDate.now();
+    private static final String DATE_FORMATTER= "yyyy-MM-dd HH:mm:ss";
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
+
+
+
+
+    File transactionLog = new File("C:\\Users\\Student\\workspace\\module1-capstone-java-team-6\\Capstone\\java\\AuditFile.txt");
 
 
     public VendingMachine() {
@@ -32,6 +39,7 @@ public class VendingMachine {
         }
 
     }
+
 
     public void purchaseItem(Scanner userInput) {
 
@@ -60,6 +68,10 @@ public class VendingMachine {
                         // Lower item stock by 1
                         inventoryItemMap.get(desiredItem).changeStock();
                         System.out.println("Your new balance is: " + customer.getBalance());
+                        String auditLine  = inventoryItemMap.get(desiredItem).getButton() +" "+ inventoryItemMap.get(desiredItem).getItemName() +" " + inventoryItemMap.get(desiredItem).getItemPrice()+" "+ customer.getBalance();
+                        writeLog(auditLine);
+
+
 
 
                     } else {
@@ -79,6 +91,7 @@ public class VendingMachine {
     public void completeTransaction() {
         // Converts the current balance into double to help calculate the change
         double amountToReturn = Double.parseDouble(customer.getBalance());
+        double auditReturn = Double.parseDouble(customer.getBalance());
 
         // Sets each initial change type to 0
         int quarters = 0;
@@ -108,11 +121,23 @@ public class VendingMachine {
         } else {
             System.out.println("Balance is $0. No change returned.");
         }
+        String auditLine  = "GIVE CHANGE "+ auditReturn +" "+ customer.getBalance();
+        writeLog(auditLine);
 
     }
 
+    public void writeLog(String auditLine) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(transactionLog,true))){
+            LocalDateTime now = LocalDateTime.now();
 
-    public void writeLog() {
+            String formatDateTime = now.format(formatter);
+
+            writer.println(formatDateTime +" " +auditLine);
+
+
+        } catch (IOException e){
+            System.out.println("Error File not here buddy!");
+        }
 
     }
 
