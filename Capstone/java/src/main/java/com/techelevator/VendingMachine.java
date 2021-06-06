@@ -1,14 +1,12 @@
 package com.techelevator;
 
 import java.io.*;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 
 public class VendingMachine {
 
@@ -17,6 +15,8 @@ public class VendingMachine {
     private Transactions vendingMachineProfits = new Transactions("0");
     private static final String DATE_FORMATTER= "yyyy-MM-dd HH:mm:ss";
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
+    Locale currentLocale = Locale.US;
+    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(currentLocale);
     File transactionLog = new File("C:\\Users\\Student\\workspace\\module1-capstone-java-team-6\\Capstone\\java\\AuditFile.txt");
     File salesReport = new File("C:\\Users\\Student\\workspace\\module1-capstone-java-team-6\\Capstone\\java\\SalesReport.txt");
 
@@ -52,13 +52,17 @@ public class VendingMachine {
 
     }
 
+
+
     public void feedMoney(Scanner userInput) {
+
         // Adds cash to the customer's balance
         System.out.println("Please enter cash: ");
         String depositAmount = userInput.nextLine();
         customer.deposit(depositAmount);
-        System.out.println("Money fed successfully.");
-        writeLog("FEED MONEY $" + depositAmount + " $" + customer.getBalance());
+        System.out.println("Money fed successfully: " + currencyFormatter.format(Double.parseDouble(customer.getBalance())));
+        writeLog("FEED MONEY " + currencyFormatter.format(Double.parseDouble(depositAmount)) + " " + currencyFormatter.format(Double.parseDouble(customer.getBalance())));
+
     }
 
 
@@ -68,11 +72,11 @@ public class VendingMachine {
         if (customer.getBalance().equals("0")) {
 
             // Sends customer back to the menu to ask them to feed in money
-            System.out.println("Balance is $0. Please feed money first");
+            System.out.println("Balance is $0.00 Please feed money first");
 
         } else {
 
-            System.out.println("Your current balance is: $" + Double.parseDouble(customer.getBalance()) + ". What would you like to purchase?");
+            System.out.println("Your current balance is: " + currencyFormatter.format(Double.parseDouble(customer.getBalance())) + ". What would you like to purchase?");
             String desiredItem = userInput.nextLine().toUpperCase();
 
             // Checks the itemMap for the correct button input
@@ -95,10 +99,12 @@ public class VendingMachine {
 
                         // Lower item stock by 1 and return new balance
                         inventoryItemMap.get(desiredItem).changeStock();
-                        System.out.println("Your new balance is: $" + customer.getBalance());
+                        System.out.println("Your new balance is: " + currencyFormatter.format(Double.parseDouble(customer.getBalance())));
 
                         // Add line to audit file
-                        String auditLine  = inventoryItemMap.get(desiredItem).getButton() +" "+ inventoryItemMap.get(desiredItem).getItemName() +" $" + inventoryItemMap.get(desiredItem).getItemPrice()+" $"+ customer.getBalance();
+                        String auditLine  = inventoryItemMap.get(desiredItem).getButton() + " " + inventoryItemMap.get(desiredItem).getItemName() +
+                                " " + currencyFormatter.format(Double.parseDouble(inventoryItemMap.get(desiredItem).getItemPrice())) +
+                                " " + currencyFormatter.format(Double.parseDouble(customer.getBalance()));
                         writeLog(auditLine);
 
 
@@ -120,7 +126,7 @@ public class VendingMachine {
         // Converts the current balance into double to help calculate the change
         // Saves initial balance as amountToReturn to log in audit file
         double amountToReturn = Double.parseDouble(customer.getBalance());
-        double auditReturn = Double.parseDouble(customer.getBalance());
+        String auditReturn = currencyFormatter.format(Double.parseDouble(customer.getBalance()));
 
         // Sets each initial change type to 0
         int quarters = 0;
@@ -153,11 +159,11 @@ public class VendingMachine {
 
         } else {
             // If balance was already $0.00
-            System.out.println("Balance is $0. No change returned.");
+            System.out.println("Balance is $0.00. No change returned.");
         }
 
         // Add line to audit file
-        String auditLine  = "GIVE CHANGE $"+ auditReturn +" $"+ customer.getBalance();
+        String auditLine  = "GIVE CHANGE " + auditReturn + " " + currencyFormatter.format(Double.parseDouble(customer.getBalance()));
         writeLog(auditLine);
 
     }
@@ -183,7 +189,8 @@ public class VendingMachine {
                 writer.println(entry.getValue().getItemName() + "|" + (5-entry.getValue().getStock()));
             }
 
-            writer.println("\n**TOTAL SALES** $" + vendingMachineProfits.getBalance());
+            writer.println("\n**TOTAL SALES** " + currencyFormatter.format(Double.parseDouble(vendingMachineProfits.getBalance())));
+            System.out.println("SUPER SECRET SALES REPORT UPDATED");
         } catch (IOException e){
             System.out.println("Error File not here buddy!");
         }
